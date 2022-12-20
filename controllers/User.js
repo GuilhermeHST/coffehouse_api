@@ -31,9 +31,10 @@ const findUserById = (req, res) => {
 }
 
 const updateUser = (req, res) =>{
-    const user = new User({
-        username: req.params.username,
-        password: req.params.password,
+    const user = ({
+        _id: req.params.id,
+        username: req.body.username,
+        password: req.body.password,
     })
     console.table(user);
     User.updateOne({ _id: req.params.id }, user).then(()=>{
@@ -47,7 +48,7 @@ const deleteUser = (req, res)=>{
     User.deleteOne({ _id: req.params.id }).then(()=>{
         return res.status(204).json({ mensagem: "Usuário deletado com sucesso!"})
     }).catch((erro)=>{
-        return res.status(400).json({mensagem: "Usuário não deletado"})
+        return res.status(400).json({mensagem: "Usuário não deletado " +erro})
     })
 }
 
